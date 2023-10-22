@@ -1,0 +1,31 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f2;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px 20px;
+    margin: 10px;
+    gap: 36px;
+
+    p {
+      margin-bottom: -23px;
+      color: rgb(240, 132, 132);
+    }
+
+    label {
+      color: #6fb3b8;
+    }
+  }
+  .buttonSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
