@@ -26,6 +26,9 @@
   transform: translate(2px, 2px);
 }
 
+button:disabled {
+}
+
 @media (min-width: 768px) {
   .button {
     min-width: 120px;

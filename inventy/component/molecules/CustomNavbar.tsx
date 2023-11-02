@@ -15,8 +15,8 @@ const CustomNavbar = () => {
           >
             Inventy
           </Typography>
-          <Button color="inherit">Add Product</Button>
-          <Button color="inherit">Check Inventory</Button>
+          <Button color="inherit">Products</Button>
+          <Button color="inherit">Inventory</Button>
         </Toolbar>
       </AppBar>
     </header>

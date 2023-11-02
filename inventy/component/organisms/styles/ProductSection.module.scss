@@ -1,0 +1,30 @@
+.section {
+  padding: 120px 40px 0 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 36px;
+
+  .buttonSection {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .table {
+    width: 100%;
+    height: auto;
+
+    th {
+      font-size: 24px;
+      font-family: "TiltNeon";
+    }
+
+    td {
+      font-size: 16px;
+      font-family: "TiltNeon";
+    }
+  }
+}

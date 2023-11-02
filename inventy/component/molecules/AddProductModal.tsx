@@ -1,7 +1,9 @@
+import { CapitalizeFirstLetter } from "@/helper/CommonUtils";
 import { AddProductSchema } from "@/helper/ValidationSchema";
 import { Product } from "@/src/entity/Product";
 import { Modal, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { useEffect } from "react";
 import AddButton from "../atoms/AddButton";
 import styles from "./styles/AddProductModal.module.scss";
 
@@ -9,6 +11,8 @@ interface AddProductModalProps {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
   onSubmit: (p: Omit<Product, "id">) => void;
+  error: string;
+  setError: (s: string) => void;
 }
 
 const AddProductModal = (p: AddProductModalProps) => {
@@ -26,14 +30,13 @@ const AddProductModal = (p: AddProductModalProps) => {
       unit: false,
     },
     validationSchema: AddProductSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       p.onSubmit({
-        name: values.name,
-        price: values.price ? Number(values.price) : 1,
-        quantity: values.quantity ? Number(values.quantity) : 1,
+        name: CapitalizeFirstLetter(values.name),
+        price: values.price ? Number(values.price) : 0,
+        quantity: values.quantity ? Number(values.quantity) : 0,
         unit: values.unit,
       });
-      resetForm();
     },
   });
 
@@ -45,7 +48,18 @@ const AddProductModal = (p: AddProductModalProps) => {
     resetForm,
     touched,
     setFieldTouched,
+    submitForm,
+    setSubmitting,
   } = formik;
+
+  useEffect(() => {
+    if (p.error) {
+      setSubmitting(false);
+    } else {
+      resetForm();
+      p.setIsOpen(false);
+    }
+  }, [submitForm]);
 
   return (
     <Modal open={p.isOpen} className={styles.modal}>
@@ -57,10 +71,12 @@ const AddProductModal = (p: AddProductModalProps) => {
           name="name"
           value={values.name}
           onChange={handleChange}
-          helperText={touched.name && errors.name}
+          helperText={touched.name && (errors.name || p.error)}
           onBlur={() => setFieldTouched("name", true)}
+          onClick={() => p.setError("")}
         />
         <TextField
+          type={"number"}
           fullWidth={true}
           label="Price"
           id="price"
@@ -71,8 +87,10 @@ const AddProductModal = (p: AddProductModalProps) => {
           onBlur={() => {
             setFieldTouched("price", true);
           }}
+          onClick={() => p.setError("")}
         />
         <TextField
+          type={"number"}
           fullWidth={true}
           label="Initial Quantity"
           id="quantity"
@@ -81,6 +99,7 @@ const AddProductModal = (p: AddProductModalProps) => {
           onChange={handleChange}
           helperText={touched.quantity && errors.quantity}
           onBlur={() => setFieldTouched("quantity", true)}
+          onClick={() => p.setError("")}
         />
         <TextField
           id="unit"
@@ -89,8 +108,9 @@ const AddProductModal = (p: AddProductModalProps) => {
           name="unit"
           value={values.unit}
           onChange={handleChange}
-          helperText={touched.unit && errors.unit}
+          helperText={touched.unit && (errors.unit || p.error)}
           onBlur={() => setFieldTouched("unit", true)}
+          onClick={() => p.setError("")}
         />
         <div className={styles.buttonSection}>
           <AddButton
@@ -100,7 +120,13 @@ const AddProductModal = (p: AddProductModalProps) => {
           >
             Cancel
           </AddButton>
-          <AddButton onClick={handleSubmit}>Submit</AddButton>
+          <AddButton
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Submit
+          </AddButton>
         </div>
       </form>
     </Modal>

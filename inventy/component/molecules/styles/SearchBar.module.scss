@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  .searchBar {
+    width: 100%;
+    place-self: center;
+    label {
+      color: #6fb3b8 !important;
+    }
+  }
+}

@@ -22,10 +22,10 @@
 } */
 
 html,
-body,
-div#__next > div {
+body {
   font-family: "TiltNeon", sans-serif;
   height: 100vh;
+  width: 100%;
   /* color: rgb(var(--foreground-rgb)); */
   /* background: linear-gradient(
       to bottom,
@@ -33,5 +33,12 @@ div#__next > div {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
+  background: "#F6F6F2";
+}
+
+div#__next > div {
+  width: 100%;
+  font-family: "TiltNeon", sans-serif;
+  height: 100vh;
   background: "#F6F6F2";
 }

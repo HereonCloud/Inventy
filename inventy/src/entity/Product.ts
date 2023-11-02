@@ -12,7 +12,7 @@ export class Product {
   @Column()
   quantity: number;
 
-  @Column()
+  @Column("decimal")
   price: number;
 
   @Column()
