@@ -69,4 +69,20 @@ router.route("/").patch(async (req: Request, res: Response) => {
   }
 });
 
+router.route("/").delete(async (req: Request, res: Response) => {
+  const repo = AppDataSource.getRepository(Product);
+  const product = await repo.findOne({
+    where: {
+      id: req.body.id,
+    },
+  });
+
+  if (!product) {
+    res.status(400).json({ error: "Product does not exist" });
+  } else {
+    await repo.delete({ id: req.body.id });
+    res.status(200).json({ error: "Product deleted" });
+  }
+});
+
 module.exports = router;
