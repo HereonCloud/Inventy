@@ -38,4 +38,35 @@ router.route("/").post(async (req: Request, res: Response) => {
   }
 });
 
+router.route("/").patch(async (req: Request, res: Response) => {
+  const repo = AppDataSource.getRepository(Product);
+  const inputProduct = await repo.findOne({
+    where: {
+      id: req.body.id,
+    },
+  });
+  if (inputProduct) {
+    const checkProduct = await repo.findOne({
+      where: {
+        name: req.body.name,
+        unit: req.body.unit,
+      },
+    });
+
+    if (!checkProduct) {
+      repo.update(req.body.id, {
+        name: req.body.name,
+        price: req.body.price,
+        unit: req.body.unit,
+        quantity: req.body.quantity,
+      });
+      res.status(200).json({ message: "Edit product successful" });
+    } else {
+      res
+        .status(400)
+        .json({ error: "Product with the same unit already existing" });
+    }
+  }
+});
+
 module.exports = router;
